@@ -69,8 +69,15 @@ function getMaxNumber(a, b, c) {
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  */
-function canQueenCaptureKing(/* queen, king */) {
-  throw new Error('Not implemented');
+function canQueenCaptureKing(queen, king) {
+  if (
+    queen.x === king.x ||
+    queen.y === king.y ||
+    Math.abs(queen.x - king.x) === Math.abs(queen.y - king.y)
+  ) {
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -112,8 +119,11 @@ function isIsoscelesTriangle(a, b, c) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(/* num */) {
-  throw new Error('Not implemented');
+function convertToRomanNumerals(num) {
+  return (
+    ['', 'X', 'XX', 'XXX'][Math.floor(num / 10)] +
+    ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX'][num % 10]
+  );
 }
 
 /**
@@ -310,8 +320,36 @@ function getBalanceIndex(arr) {
  *          [10, 9,  8,  7]
  *        ]
  */
-function getSpiralMatrix(/* size */) {
-  throw new Error('Not implemented');
+function getSpiralMatrix(size) {
+  let y = 0;
+  let x = 0;
+  let maxSteps = size - 1;
+
+  const matrix = [];
+
+  for (let i = 0; i < size; i += 1) {
+    matrix[i] = [];
+  }
+
+  for (let i = 0; i < size ** 2; i += 1) {
+    matrix[y][x] = i + 1;
+
+    if (y === maxSteps && x === size - maxSteps - 1) {
+      maxSteps -= 1;
+    }
+
+    if (x < maxSteps && y === size - maxSteps - 1) {
+      x += 1;
+    } else if (x >= maxSteps && y < x) {
+      y += 1;
+    } else if (y >= maxSteps && x > size - maxSteps - 1) {
+      x -= 1;
+    } else if (y > size - maxSteps - 1 && x <= size - maxSteps - 1) {
+      y -= 1;
+    }
+  }
+
+  return matrix;
 }
 
 /**
