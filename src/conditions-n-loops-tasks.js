@@ -397,20 +397,26 @@ function sortByAsc(arr) {
   if (arr.length < 2) {
     return arr;
   }
-
+  const newArr = arr;
   const pivot = arr[0];
   const left = [];
   const right = [];
 
   for (let i = 1; i < arr.length; i += 1) {
     if (arr[i] <= pivot) {
-      left.push(arr[i]);
+      left[left.length] = arr[i];
     } else {
-      right.push(arr[i]);
+      right[right.length] = arr[i];
     }
   }
 
-  return sortByAsc(left).concat(pivot, sortByAsc(right));
+  const res = [...sortByAsc(left), pivot, ...sortByAsc(right)];
+
+  for (let i = 0; i < res.length; i += 1) {
+    newArr[i] = res[i];
+  }
+
+  return newArr;
 }
 
 /**
