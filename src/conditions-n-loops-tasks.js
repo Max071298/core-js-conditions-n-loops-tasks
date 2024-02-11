@@ -478,8 +478,57 @@ function shuffleChar(str, iterations) {
  * @param {number} number The source number
  * @returns {number} The nearest larger number, or original number if none exists.
  */
-function getNearestBigger(/* number */) {
-  throw new Error('Not implemented');
+function getNearestBigger(number) {
+  const numberArr = [];
+  for (let i = 0; i < `${number}`.length; i += 1) {
+    numberArr.push(`${number}`[i]);
+  }
+  let smallestNumberRight;
+  let smallestNumberLeft;
+  let smallestNumberRightId;
+  let smallestNumberLeftId;
+  let sortedPartArr = [];
+  let result = '';
+
+  for (let i = numberArr.length - 1; i >= 0; i -= 1) {
+    if (numberArr[i] < numberArr[i + 1]) {
+      smallestNumberRight = numberArr[i];
+      smallestNumberRightId = i;
+      break;
+    } else if (i === 0 && numberArr[0] >= numberArr[1]) {
+      return number;
+    }
+  }
+
+  for (let i = smallestNumberRightId + 1; i < numberArr.length; i += 1) {
+    if (numberArr[i] > smallestNumberRight) {
+      if (smallestNumberLeft === undefined) {
+        smallestNumberLeft = numberArr[i];
+        smallestNumberLeftId = i;
+      } else if (numberArr[i] < smallestNumberLeft) {
+        smallestNumberLeft = numberArr[i];
+        smallestNumberLeftId = i;
+      }
+    }
+  }
+  numberArr[smallestNumberRightId] = smallestNumberLeft;
+  numberArr[smallestNumberLeftId] = smallestNumberRight;
+
+  for (let i = smallestNumberRightId + 1; i < numberArr.length; i += 1) {
+    sortedPartArr.push(numberArr[i]);
+  }
+
+  sortedPartArr = sortedPartArr.sort((a, b) => a - b);
+
+  for (let i = 0; i < numberArr.length; i += 1) {
+    if (i <= smallestNumberRightId) {
+      result += numberArr[i];
+    } else {
+      result += sortedPartArr[i - smallestNumberRightId - 1];
+    }
+  }
+
+  return +result;
 }
 
 module.exports = {
